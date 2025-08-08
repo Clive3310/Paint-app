@@ -10,6 +10,14 @@ class UI:
     def __init__(self) -> None:
         self.ui = pg.surface.Surface((400, 90))
         self.ui.fill((100, 100, 100))
+
+        self.clear = False
+
+        self.ct = pg.draw.rect(self.ui, (151, 230, 0), (5, 4, 60, 18))
+        text = font.render('CLEAR', True, (0, 0, 0))
+        self.ui.blit(text, (8, 7))
+
+        self.clear_butt = pg.rect.Rect(self.ct.x + 5, self.ct.y + 5, self.ct.width, self.ct.height)
         
         self.bt = pg.draw.rect(self.ui, (151, 230, 0), (5, 25, 60, 60))
         text = font.render('BRUSH', True, (0, 0, 0))
@@ -54,6 +62,9 @@ class UI:
             if butt.collidepoint(event.pos):
                 self.selected_size = key
         
+        if self.clear_butt.collidepoint(event.pos):
+            self.clear = True
+        
         return self.selected_butt, self.selected_size
 
 
@@ -85,6 +96,9 @@ class Canvas:
         elif self.selected_tool == "PENCIL":
             pg.draw.rect(self.c, (0, 0, 0), (pos[0] - self.radius // 2, pos[1] - self.radius // 2, self.radius, self.radius), 0)
 
+    def clear(self):
+        self.c.fill((255, 255, 255))
+
 
 class Main_window:
 
@@ -97,9 +111,10 @@ class Main_window:
         pg.display.set_caption('Paint-app')
         icon = pg.image.load('res/icon.jpg')
         pg.display.set_icon(icon)
-        clock = pg.time.Clock()
 
         screen.fill((30, 30, 30))
+
+        tool, size = self.ui.selected_butt, self.ui.selected_size
 
         while True:
             for event in pg.event.get():
@@ -108,8 +123,14 @@ class Main_window:
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     tool, size = ui.handle_event(event)
                     canvas.handle_event(event, tool, size)
-            
-            clock.tick(60)
+                    if self.ui.clear:
+                        self.canvas.clear()
+                        self.ui.clear = False
+                elif event.type == pg.MOUSEMOTION:
+                    if pg.mouse.get_pressed()[0]:
+                        tool, size = ui.handle_event(event)
+                    if pg.mouse.get_pressed()[0]:
+                        canvas.handle_event(event, tool, size)
 
             self.ui.be_drawn(screen)
             self.canvas.be_drawn(screen)
