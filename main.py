@@ -14,20 +14,18 @@ class UI:
         self.clear = False
 
         self.ct = pg.draw.rect(self.ui, (151, 230, 0), (5, 4, 60, 18))
+        self.clear_butt = pg.rect.Rect(self.ct.x + 5, self.ct.y + 5, self.ct.width, self.ct.height)
         text = font.render('CLEAR', True, (0, 0, 0))
         self.ui.blit(text, (8, 7))
-
-        self.clear_butt = pg.rect.Rect(self.ct.x + 5, self.ct.y + 5, self.ct.width, self.ct.height)
         
         self.bt = pg.draw.rect(self.ui, (151, 230, 0), (5, 25, 60, 60))
+        self.brush_butt = pg.rect.Rect(self.bt.x + 5, self.bt.y + 5, self.bt.width, self.bt.height)
         text = font.render('BRUSH', True, (0, 0, 0))
         self.ui.blit(text, (8, 49))
         self.pt = pg.draw.rect(self.ui, (151, 230, 0), (70, 25, 60, 60))
+        self.pencil_butt = pg.rect.Rect(self.pt.x + 5, self.pt.y + 5, self.pt.width, self.pt.height)
         text = font.render('PENCIL', True, (0, 0, 0))
         self.ui.blit(text, (72, 49))
-
-        self.brush_butt = pg.rect.Rect(self.bt.x + 5, self.bt.y + 5, self.bt.width, self.bt.height)
-        self.pencil_butt = pg.rect.Rect(self.pt.x + 5, self.pt.y + 5, self.pt.width, self.pt.height)
 
         self.butts = {"BRUSH": self.brush_butt, "PENCIL": self.pencil_butt}
         self.selected_butt = "BRUSH"
@@ -48,10 +46,47 @@ class UI:
         self.size_butts = {4: self.size_butt_4, 6: self.size_butt_6, 8: self.size_butt_8}
         self.selected_size = 6
 
+        self.red_b = pg.draw.rect(self.ui, (255, 0, 0), (190, 21, 20, 20))
+        self.red_b = pg.rect.Rect(self.red_b.x + 5, self.red_b.y + 5, self.red_b.width, self.red_b.height)
+        self.green_b = pg.draw.rect(self.ui, (0, 255, 0), (190, 46, 20, 20))
+        self.green_b = pg.rect.Rect(self.green_b.x + 5, self.green_b.y + 5, self.green_b.width, self.green_b.height)
+        self.blue_b = pg.draw.rect(self.ui, (0, 0, 255), (190, 71, 20, 20))
+        self.blue_b = pg.rect.Rect(self.blue_b.x + 5, self.blue_b.y + 5, self.blue_b.width, self.blue_b.height)
+        self.lightsalmon_b = pg.draw.rect(self.ui, (255, 160, 122), (215, 21, 20, 20))
+        self.lightsalmon_b = pg.rect.Rect(self.lightsalmon_b.x + 5, self.lightsalmon_b.y + 5, self.lightsalmon_b.width, self.lightsalmon_b.height)
+        self.hotpink_b = pg.draw.rect(self.ui, (255, 105, 180), (215, 46, 20, 20))
+        self.hotpink_b = pg.rect.Rect(self.hotpink_b.x + 5, self.hotpink_b.y + 5, self.hotpink_b.width, self.hotpink_b.height)
+        self.orange_b = pg.draw.rect(self.ui, (255, 165, 0), (215, 71, 20, 20))
+        self.orange_b = pg.rect.Rect(self.orange_b.x + 5, self.orange_b.y + 5, self.orange_b.width, self.orange_b.height)
+        self.yellow_b = pg.draw.rect(self.ui, (255, 255, 0), (240, 21, 20, 20))
+        self.yellow_b = pg.rect.Rect(self.yellow_b.x + 5, self.yellow_b.y + 5, self.yellow_b.width, self.yellow_b.height)
+        self.indigo_b = pg.draw.rect(self.ui, (75, 0, 130), (240, 46, 20, 20))
+        self.indigo_b = pg.rect.Rect(self.indigo_b.x + 5, self.indigo_b.y + 5, self.indigo_b.width, self.indigo_b.height)
+        self.cyan_b = pg.draw.rect(self.ui, (0, 255, 255), (240, 71, 20, 20))
+        self.black_b = pg.draw.rect(self.ui, (0, 0, 0), (265, 46, 20, 20))
+        self.black_b = pg.rect.Rect(self.black_b.x + 5, self.black_b.y + 5, self.black_b.width, self.black_b.height)
+        self.cyan_b = pg.rect.Rect(self.cyan_b.x + 5, self.cyan_b.y + 5, self.cyan_b.width, self.cyan_b.height)
+        self.white_b = pg.draw.rect(self.ui, (255, 255, 255), (265, 71, 20, 20))
+        self.white_b = pg.rect.Rect(self.white_b.x + 5, self.white_b.y + 5, self.white_b.width, self.white_b.height)
+        
+        self.color_butts = {(255, 0, 0): self.red_b, (0, 255, 0): self.green_b, (0, 0, 255): self.blue_b, 
+                            (255, 160, 122): self.lightsalmon_b, (255, 105, 180): self.hotpink_b, (255, 165, 0): self.orange_b,
+                            (255, 255, 0): self.yellow_b, (75, 0, 130): self.indigo_b, (0, 255, 255): self.cyan_b,
+                            (0, 0, 0): self.black_b, (255, 255, 255): self.white_b}
+        self.color_map = {(255, 0, 0): 'RED', (0, 255, 0): 'GREEN', (0, 0, 255): 'BLUE', 
+                            (255, 160, 122): 'LIGHT SALMON', (255, 105, 180): 'HOT PINK', (255, 165, 0): 'ORANGE',
+                            (255, 255, 0): 'YELLOW', (75, 0, 130): 'INDIGO', (0, 255, 255): 'CYAN',
+                            (0, 0, 0): 'BLACK', (255, 255, 255): 'WHITE'}
+        self.selected_color = (255, 0, 0)
+    
     def be_drawn(self, screen: pg.surface.Surface):
         screen.blit(self.ui, (5, 5))
         text = font.render(f'Selected tool ({self.selected_size}): {self.selected_butt}', True, (0, 0, 0))
         screen.blit(text, (120, 11))
+        text1 = font.render(f'Selected color: ', True, (0, 0, 0))
+        screen.blit(text1, (290, 30))
+        text = font.render(self.color_map[self.selected_color], True, (0, 0, 0))
+        screen.blit(text, (290 + text1.get_width() // 2 - text.get_width() // 2, 50))
 
     def handle_event(self, event):
         for key, butt in self.butts.items():
@@ -65,7 +100,11 @@ class UI:
         if self.clear_butt.collidepoint(event.pos):
             self.clear = True
         
-        return self.selected_butt, self.selected_size
+        for key, color_b in self.color_butts.items():
+            if color_b.collidepoint(event.pos):
+                self.selected_color = key
+        
+        return self.selected_butt, self.selected_size, self.selected_color
 
 
 class Canvas:
@@ -75,6 +114,7 @@ class Canvas:
         self.c.fill((255, 255, 255))
 
         self.selected_tool = "BRUSH"
+        self.selected_color = "red"
         self.radius = 4
 
         self.pos = pg.rect.Rect(5, 100, 400, 400)
@@ -82,19 +122,20 @@ class Canvas:
     def be_drawn(self, screen: pg.surface.Surface):
         screen.blit(self.c, (5, 100))
 
-    def handle_event(self, event, tool, size):
+    def handle_event(self, event, tool, size, color):
         pos = event.pos
         self.selected_tool = tool
         self.radius = size
+        self.selected_color = color
 
         if self.pos.collidepoint(pos):
             self.draw((pos[0] - 5, pos[1] - 100))
 
     def draw(self, pos):
         if self.selected_tool == "BRUSH":
-            pg.draw.rect(self.c, (255, 0, 0), (pos[0] - self.radius // 2, pos[1] - self.radius // 2, self.radius, self.radius), 0)
+            pg.draw.circle(self.c, self.selected_color, pos, self.radius, 0)
         elif self.selected_tool == "PENCIL":
-            pg.draw.rect(self.c, (0, 0, 0), (pos[0] - self.radius // 2, pos[1] - self.radius // 2, self.radius, self.radius), 0)
+            pg.draw.circle(self.c, (0, 0, 0), pos, self.radius // 2, 0)
 
     def clear(self):
         self.c.fill((255, 255, 255))
@@ -120,18 +161,14 @@ class Main_window:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     return
-                elif event.type == pg.MOUSEBUTTONDOWN:
-                    tool, size = ui.handle_event(event)
-                    canvas.handle_event(event, tool, size)
-                    if self.ui.clear:
-                        self.canvas.clear()
-                        self.ui.clear = False
-                elif event.type == pg.MOUSEMOTION:
-                    if pg.mouse.get_pressed()[0]:
-                        tool, size = ui.handle_event(event)
-                    if pg.mouse.get_pressed()[0]:
-                        canvas.handle_event(event, tool, size)
-
+            
+            if pg.mouse.get_pressed()[0]:
+                tool, size, color = self.ui.handle_event(pg.event.EventType(pg.MOUSEBUTTONDOWN, {'pos': pg.mouse.get_pos()}))
+                canvas.handle_event(pg.event.EventType(pg.MOUSEBUTTONDOWN, {'pos': pg.mouse.get_pos()}), tool, size, color)
+                if self.ui.clear:
+                    self.canvas.clear()
+                    self.ui.clear = False
+            
             self.ui.be_drawn(screen)
             self.canvas.be_drawn(screen)
 
